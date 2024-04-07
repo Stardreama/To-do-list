@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from 'react';
+import { DatePicker, Space, Input,Row,Col } from 'antd';
+const onChange = (date, dateString) => {
+  console.log(date, dateString);
+};
 function App() {
+  const all_style={
+    width:500
+  }
+  const titleStyle = {
+    fontSize: 30,
+    textAlign: "center",
+  }
+  const contentStyle = {
+    textAlign: "center",
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <h1 style={titleStyle}> To Do List</h1>
+      <div style={contentStyle}>
+        <div >
+          <Input placeholder="输入任务名称" style={{ width: 500 }} />
+        </div>
+        <div>
+          <Space direction="vertical">
+            <DatePicker onChange={onChange} placeholder="选择截止时间" />
+          </Space>
+        </div>
+      </div>
     </div>
   );
 }
