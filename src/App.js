@@ -16,16 +16,16 @@ function App() {
   }, []);
   const [messageApi, contextHolder] = message.useMessage();
   const [flag, setFlag] = useState(0)
-  const { Text, Link } = Typography;
   const [toDoList, setToDoList] = useState([])
   const [name, setName] = useState('')
   const [date, setDate] = useState('')
-  const [objectDateNow, setObjectDateNow] = useState(new Date(moment().format('YYYY-MM-DD')))
-  // const [objectDateTarget,setObjectDateTarget]=useState('')
-  const [keyValue,setKeyValue]=useState('')
+  const [objectDateNow, setObjectDateNow] = useState(moment().format('YYYY-MM-DD'))
+  const [keyValue, setKeyValue] = useState('')
   const handleDateChange = (date, dateString) => {
     console.log(dateString);
-    setDate(dateString)
+    console.log("------");
+    console.log(moment(dateString).format("YYYY-MM-DD"));
+    setDate(moment(dateString).format("YYYY-MM-DD"))
   };
   const error = () => {
     messageApi.open({
@@ -40,7 +40,7 @@ function App() {
   const handleAdd = () => {
     if (name && date) {
       console.log(name, date);
-      const targetTime = moment(date).toDate();
+      const targetTime = moment(date).format("YYYY-MM-DD");
       setToDoList([
         ...toDoList,
         {
