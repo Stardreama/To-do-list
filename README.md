@@ -1,3 +1,3 @@
 # Hi here!  
 
-This is a simple **react** program whose name is **to do list** just like the app we use.  
+This is a simple **React** program called **To-Do List**, similar to the app we use.
