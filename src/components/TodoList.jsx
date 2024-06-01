@@ -5,13 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 import '../App.css'
 function TodoList() {
-    useEffect(() => {
-        document.title = "Todo List";
-        const timer =setInterval(() => {
-            setObjectDateNow(moment().format('YYYY-MM-DD'))
-        }, 60000)
-        return ()=>clearInterval(timer)
-    }, []);
+    
     const [messageApi, contextHolder] = message.useMessage();
     const [flag, setFlag] = useState(0)
     const [toDoList, setToDoList] = useState([])
@@ -19,6 +13,23 @@ function TodoList() {
     const [date, setDate] = useState('')
     const [objectDateNow, setObjectDateNow] = useState(moment().format('YYYY-MM-DD'))
     const [keyValue, setKeyValue] = useState('')
+
+    useEffect(() => {
+        document.title = "Todo List";
+        const storedToDoList = localStorage.getItem('toDoList')
+        if (storedToDoList) {
+            setToDoList(JSON.parse(storedToDoList))
+        }
+        const timer = setInterval(() => {
+            setObjectDateNow(moment().format('YYYY-MM-DD'))
+        }, 60000)
+        return () => clearInterval(timer)
+    }, []);
+    useEffect(() => {
+        localStorage.setItem('toDoList', JSON.stringify(toDoList));
+        setFlag(toDoList.length)
+    }, [toDoList]);
+
     const handleDateChange = (date, dateString) => {
         setDate(moment(dateString).format("YYYY-MM-DD"))
     };
