@@ -7,6 +7,10 @@ import '../App.css'
 function TodoList() {
     useEffect(() => {
         document.title = "Todo List";
+        const timer =setInterval(() => {
+            setObjectDateNow(moment().format('YYYY-MM-DD'))
+        }, 60000)
+        return ()=>clearInterval(timer)
     }, []);
     const [messageApi, contextHolder] = message.useMessage();
     const [flag, setFlag] = useState(0)
@@ -30,7 +34,6 @@ function TodoList() {
     }
     const handleAdd = () => {
         if (name && date) {
-            console.log(name, date);
             const targetTime = moment(date).format("YYYY-MM-DD");
             setToDoList([
                 ...toDoList,
@@ -93,8 +96,8 @@ function TodoList() {
                 <div className='content'>
                     <Row key={item.id} className='row'>
                         <Col className='col'>
-                            {item.isFinished ? (<div className='finish'>{item.toDoName}</div>) : (<div className={objectDateNow > item.targetTime ? 'overtime' : 'notovertime'}>{item.toDoName}</div>)}
-                            {item.isFinished ? (<div className='finish'>{item.toDoTime}</div>) : (<div className={objectDateNow > item.targetTime ? 'overtime' : 'notovertime'}>{item.toDoTime}</div>)}
+                            {item.isFinished ? (<div className='finish'>{item.toDoName}</div>) : (<div className={objectDateNow > item.targetTime ? 'overtime' : 'intime'}>{item.toDoName}</div>)}
+                            {item.isFinished ? (<div className='finish'>{item.toDoTime}</div>) : (<div className={objectDateNow > item.targetTime ? 'overtime' : 'intime'}>{item.toDoTime}</div>)}
                         </Col>
                         <Col className='checkrow'>
                             <Checkbox onChange={() => handleFinish(item.id)}></Checkbox>
