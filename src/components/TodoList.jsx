@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 import '../App.css'
 function TodoList() {
-    
+
     const [messageApi, contextHolder] = message.useMessage();
     const [flag, setFlag] = useState(0)
     const [toDoList, setToDoList] = useState([])
@@ -111,7 +111,7 @@ function TodoList() {
                             {item.isFinished ? (<div className='finish'>{item.toDoTime}</div>) : (<div className={objectDateNow > item.targetTime ? 'overtime' : 'intime'}>{item.toDoTime}</div>)}
                         </Col>
                         <Col className='checkrow'>
-                            <Checkbox onChange={() => handleFinish(item.id)}></Checkbox>
+                            <Checkbox checked={item.isFinished ? true : false} onChange={() => handleFinish(item.id)}></Checkbox>
                         </Col >
                         <Col><DeleteOutlined onClick={() => handleDelete(item.id)} className='checkrow' /></Col>
                     </Row>
