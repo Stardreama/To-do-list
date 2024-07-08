@@ -4,8 +4,10 @@ import { DeleteOutlined, InboxOutlined } from '@ant-design/icons';
 import { v4 as uuidv4 } from 'uuid'
 import moment from 'moment'
 import '../App.css'
-function TodoList() {
-
+function TodoList({ username, userid }) {
+    // const { userid,username } = useParams();
+    console.log("id=",userid);
+    console.log("username=",username);
     const [messageApi, contextHolder] = message.useMessage();
     const [flag, setFlag] = useState(0)
     const [toDoList, setToDoList] = useState([])
@@ -16,19 +18,40 @@ function TodoList() {
 
     useEffect(() => {
         document.title = "Todo List";
-        const storedToDoList = localStorage.getItem('toDoList')
-        if (storedToDoList) {
-            setToDoList(JSON.parse(storedToDoList))
-        }
+        //const storedToDoList = localStorage.getItem('toDoList')
+        // if (storedToDoList) {
+        //     setToDoList(JSON.parse(storedToDoList))
+        // }
         const timer = setInterval(() => {
             setObjectDateNow(moment().format('YYYY-MM-DD'))
         }, 60000)
         return () => clearInterval(timer)
     }, []);
+
     useEffect(() => {
-        localStorage.setItem('toDoList', JSON.stringify(toDoList));
-        setFlag(toDoList.length)
-    }, [toDoList]);
+        const fetchTasks = async () => {
+            try {
+                const response = await fetch(`http://localhost:3000/getTasks/${userid}`);
+                const tasks = await response.json();
+                setToDoList(tasks.map(task => ({
+                    id: task.taskid,
+                    toDoName: task.taskinfo,
+                    toDoTime: moment(task.ddl).format('YYYY-MM-DD'),
+                    isFinished: false,
+                    targetTime: moment(task.ddl).format('YYYY-MM-DD')
+                })));
+                setFlag(toDoList.length)
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
+        fetchTasks();
+    }, [userid, toDoList]);
+
+    // useEffect(() => {
+    //     localStorage.setItem('toDoList', JSON.stringify(toDoList));
+    //     setFlag(toDoList.length)
+    // }, [toDoList]);
 
     const handleDateChange = (date, dateString) => {
         setDate(moment(dateString).format("YYYY-MM-DD"))
@@ -43,19 +66,46 @@ function TodoList() {
     const getName = (name) => {
         setName(name)
     }
-    const handleAdd = () => {
+    const handleAdd = async () => {
         if (name && date) {
             const targetTime = moment(date).format("YYYY-MM-DD");
-            setToDoList([
-                ...toDoList,
-                {
-                    toDoName: name,
-                    toDoTime: date,
-                    id: uuidv4(),
-                    isFinished: false,
-                    targetTime: targetTime
+            const newTask = {
+                id: uuidv4(),
+                toDoName: name,
+                toDoTime: date,
+                isFinished: false,
+                targetTime: targetTime
+            };
+            // setToDoList([
+            //     ...toDoList,
+            //     {
+            //         toDoName: name,
+            //         toDoTime: date,
+            //         id: uuidv4(),
+            //         isFinished: false,
+            //         targetTime: targetTime
+            //     }
+            // ])
+            try {
+                const response = await fetch('http://localhost:3000/addTask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userid, taskid: newTask.id, taskinfo: name, ddl: date })
+                });
+                if (response.ok) {
+                    setToDoList([...toDoList, newTask]);
+                    setKeyValue(new Date());
+                    setFlag(flag + 1);
+                    setName('');
+                    setDate('');
+                } else {
+                    throw new Error('Failed to add task');
                 }
-            ])
+            } catch (error) {
+                console.error('Error adding task:', error);
+            }
             setKeyValue(new Date())
             setFlag(flag + 1)
             setName('')
@@ -86,6 +136,7 @@ function TodoList() {
         <div className='box'>
             {contextHolder}
             <h1 className='title'> To Do List</h1>
+            <h3>用户{username}，欢迎你的使用！</h3>
             <div >
                 <Row>
                     <Col className='inputAdd'>
