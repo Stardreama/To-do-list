@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './register_login.css';
@@ -25,11 +26,17 @@ const RegisterLogin = ({ setIsLoggedIn,setUserid,setUsername }) => {
         // if (true) {
             const data = await response.json();
             setIsLoggedIn(true);
+            message.success(submitter.name === 'register'?'注册成功':'登陆成功');
             console.log(" response id=",data.userid);
             setUserid(data.userid);  // 假设后端返回的JSON中包含userId字段
             setUsername(data.username);
             console.log(" ---test---");
-            navigate(`/todolist/${data.userid}`);
+            // 设置 session 标记
+            sessionStorage.setItem('isLoggedIn', 'true');
+            sessionStorage.setItem('username', data.username);
+            sessionStorage.setItem('userid', data.userid);
+            sessionStorage.setItem('sessionStarted', 'true');
+        navigate(`/todolist/${data.userid}`);
         } else {
             alert(`${action} failed`);
         }
