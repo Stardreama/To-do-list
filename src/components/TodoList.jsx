@@ -6,10 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
 import '../App.css'
 function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
-    // const { userid,username } = useParams();
-    console.log("id=", userid);
-    console.log("username=", username);
-    const navigate = useNavigate(); // 获取导航函数
+    const navigate = useNavigate(); 
     const [messageApi, contextHolder] = message.useMessage();
     const [flag, setFlag] = useState(0)
     const [toDoList, setToDoList] = useState([])
@@ -20,10 +17,6 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
 
     useEffect(() => {
         document.title = "Todo List";
-        //const storedToDoList = localStorage.getItem('toDoList')
-        // if (storedToDoList) {
-        //     setToDoList(JSON.parse(storedToDoList))
-        // }
         const timer = setInterval(() => {
             setObjectDateNow(moment().format('YYYY-MM-DD'))
         }, 60000)
@@ -49,26 +42,12 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
         };
         fetchTasks();
     }, [userid]);
-    // }, [userid, toDoList]);
-
-    // useEffect(() => {
-    //     localStorage.setItem('toDoList', JSON.stringify(toDoList));
-    //     setFlag(toDoList.length)
-    // }, [toDoList]);
-
     const handleLogout = () => {
-        // 执行退出登录的逻辑，例如清除用户信息或重置登录状态
-        // 可以使用 localStorage 清除存储的用户信息等
 
-        // 示例：清除本地存储中的用户信息
         localStorage.removeItem('userid');
         localStorage.removeItem('username');
-
-        // 弹出提示消息
         message.success('成功退出登录');
         setIsLoggedIn(false);
-        // 跳转到登录注册页面
-        console.log("退出登录，状态为", isLoggedIn);
         navigate('/register');
     };
 
@@ -95,16 +74,6 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
                 isFinished: false,
                 targetTime: targetTime
             };
-            // setToDoList([
-            //     ...toDoList,
-            //     {
-            //         toDoName: name,
-            //         toDoTime: date,
-            //         id: uuidv4(),
-            //         isFinished: false,
-            //         targetTime: targetTime
-            //     }
-            // ])
             try {
                 const response = await fetch('http://localhost:3000/addTask', {
                     method: 'POST',
@@ -125,53 +94,12 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
             } catch (error) {
                 console.error('Error adding task:', error);
             }
-            // setKeyValue(new Date())
-            // setFlag(flag + 1)
-            // setName('')
-            // setDate('')
         }
         else {
             error()
         }
     }
     const handleFinish = async (id) => {
-        // setToDoList(toDoList.map(item => {
-        //     console.log("item.id=",item.id);
-        //     console.log("id=",id);
-        //     if (item.id === id) {
-        //         return {
-        //             ...item,
-        //             isFinished: !item.isFinished
-        //         }
-        //     }
-        //     else {
-        //         return item
-        //     }
-        // }))
-        // const updatedTasks = toDoList.map(item => {
-        //     if (item.id === id) {
-        //         return {
-        //             ...item,
-        //             isFinished: !item.isFinished
-        //         };
-        //     } else {
-        //         return item;
-        //     }
-        // });
-        // setToDoList(updatedTasks);
-
-        // try {
-        //     const task = updatedTasks.find(item => item.id === id);
-        //     await fetch('http://localhost:3000/updateTaskStatus', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ taskid: id, status: task.isFinished ? 1 : 0 })
-        //     });
-        // } catch (error) {
-        //     console.error('Error updating task status:', error);
-        // }
         const updatedTask = toDoList.find(task => task.id === id);
         const newStatus = !updatedTask.isFinished;
         try {
@@ -193,10 +121,6 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
             console.error('Error updating task status:', error);
         }
     };
-    // const handleDelete = (id) => {
-    //     setToDoList(toDoList.filter(item => item.id !== id))
-    //     setFlag(flag - 1)
-    // }
     const handleDelete = async (id) => {
         try {
             const response = await fetch(`http://localhost:3000/deleteTask/${id}`, {
