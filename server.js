@@ -17,9 +17,9 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'root',
-    password: '20050127a',
-    database: 'todolistuser',
+    user: '*******',//登陆mysql的用户名
+    password: '*********',//登陆mysql的密码
+    database: 'todolistuser',//数据库名称
     port: 3306
 });
 
