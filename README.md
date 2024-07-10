@@ -21,6 +21,7 @@ git clone https://github.com/Stardreama/To-do-list.git
 ## 2. 安装MySQL数据库
 
 如果尚未安装MySQL，请下载并安装。然后，创建一个新的数据库用于To-do List项目：
+在终端中输入```mysql -u your_username -p your_password```登陆到mysql,再输入以下命令
 
 ```mysql
 -- 创建数据库
