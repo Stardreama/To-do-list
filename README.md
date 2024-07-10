@@ -74,14 +74,14 @@ cd To-do-list
 npm install
 ```
 
-## 6. 启动本地服务器
+## 5. 启动本地服务器
 
 在todolist文件夹下使用命令```node server.js``` 来启动本地服务器
 
-## 7. 启动项目
+## 6. 启动项目
 
 在todolist文件夹下使用命令```npm start``` 来启动项目
 
-## 8. 访问应用
+## 7. 访问应用
 
 在浏览器中访问 ```http://localhost:3301```，查看To-do List应用。
