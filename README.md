@@ -34,8 +34,7 @@ USE todolistuser;
 CREATE TABLE IF NOT EXISTS userinfo (
     id VARCHAR(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+    password VARCHAR(255) NOT NULL
 );
 
 -- 创建 usertask 表
@@ -44,9 +43,7 @@ CREATE TABLE IF NOT EXISTS usertask (
     taskid VARCHAR(36) NOT NULL,
     taskinfo TEXT NOT NULL,
     ddl DATE NOT NULL,
-    status TINYINT(1) NOT NULL,
-    PRIMARY KEY (userid, taskid),
-    FOREIGN KEY (userid) REFERENCES userinfo(id) 
+    status TINYINT(1) NOT NULL
 );
 ```
 
