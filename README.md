@@ -81,4 +81,4 @@ npm install
 
 ## 7. 访问应用
 
-在浏览器中访问 ```http://localhost:3301```，查看To-do List应用。
+在浏览器中访问 ```http://localhost:3000```，查看To-do List应用。

@@ -141,7 +141,10 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
         <div className='box'>
             {contextHolder}
             <h1 className='title'> To Do List</h1>
-            <h3 style={{ display: 'inline' }}>用户{username}，欢迎你的使用！<Button type="primary" onClick={handleLogout}> 退出登录</Button></h3>
+            <h3 style={{ display: 'inline' }}>
+    用户 <span style={{ color: 'blue' }}>{username}</span>，欢迎你的使用！
+    <Button type="primary" onClick={handleLogout}>退出登录</Button>
+</h3>
 
             <div >
                 <Row>
