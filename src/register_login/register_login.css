@@ -1,6 +1,5 @@
 * {
     user-select: none;
-    /* 无法选中，整体感更强 */
 }
 
 .login {
@@ -9,7 +8,6 @@
     margin-top: -200px;
     left: 50%;
     margin-left: -200px;
-    /* absolute居中的一种方法 */
     background-color: whitesmoke;
     width: 400px;
     height: 400px;
@@ -17,7 +15,6 @@
     text-align: center;
     padding: 5px 40px;
     box-sizing: border-box;
-    /* 这样padding就不会影响大小 */
 }
 
 p {
@@ -32,7 +29,6 @@ input {
     margin-bottom: 10px;
     border: none;
     border-bottom: 2px solid silver;
-    /* 下面的会覆盖上面的步伐 */
     outline: none;
     font-size: 22px;
 }

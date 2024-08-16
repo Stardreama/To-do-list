@@ -53,13 +53,13 @@ CREATE TABLE IF NOT EXISTS usertask (
 
 ```js
 // server.js
-module.exports = {
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'your_mysql_username',
   password: 'your_mysql_password',
   database: 'todolist',
   port:3306
-};
+});
 ```
 
 ## 4. 安装依赖

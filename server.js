@@ -45,7 +45,7 @@ const findUser = async (username) => {
         throw err;
     }
 };
-// Routes
+
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const passwordHash = await bcrypt.hash(password, 10);
@@ -66,14 +66,14 @@ app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     try {
         const user = await findUser(username);
-        if(user){
+        if (user) {
             if (await bcrypt.compare(password, user.password)) {
                 res.status(200).json({ userid: user.id, username: user.name });
             } else {
                 res.status(400).json({ message: '密码或用户名错误' });
             }
         }
-        else{
+        else {
             res.status(400).json({ message: '用户名不存在' });
         }
     } catch (err) {
@@ -82,7 +82,6 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Add new task
 app.post('/addTask', async (req, res) => {
     const { userid, taskid, taskinfo, ddl, status } = req.body;
     try {
@@ -94,7 +93,6 @@ app.post('/addTask', async (req, res) => {
     }
 });
 
-// Get tasks for a user
 app.get('/getTasks/:userid', async (req, res) => {
     const { userid } = req.params;
     try {
@@ -106,13 +104,11 @@ app.get('/getTasks/:userid', async (req, res) => {
     }
 });
 
-// 更新任务完成状态的逻辑
 app.post('/updateTaskStatus', async (req, res) => {
     const { taskid, status } = req.body;
     const sql = 'UPDATE usertask SET status = ? WHERE taskid = ?';
     const values = [status, taskid];
     try {
-        // 使用连接池进行查询
         const [rows] = await pool.query(sql, values);
         res.status(200).send('Task status updated successfully');
     } catch (error) {
@@ -121,7 +117,6 @@ app.post('/updateTaskStatus', async (req, res) => {
     }
 });
 
-// 删除任务
 app.delete('/deleteTask/:id', async (req, res) => {
     const { id } = req.params;
     const sql = 'DELETE FROM usertask WHERE taskid = ?';
