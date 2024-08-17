@@ -122,7 +122,6 @@ app.delete('/deleteTask/:id', async (req, res) => {
     const sql = 'DELETE FROM usertask WHERE taskid = ?';
     const values = [id];
     try {
-        // 使用连接池进行查询
         const [rows] = await pool.query(sql, values);
         res.status(200).send('Task delete successfully');
     } catch (error) {
