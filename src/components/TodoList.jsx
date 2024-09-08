@@ -26,7 +26,7 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                const response = await fetch(`http://localhost:3000/getTasks/${userid}`);
+                const response = await fetch(`/api/getTasks/${userid}`);
                 const tasks = await response.json();
                 setToDoList(tasks.map(task => ({
                     id: task.taskid,
@@ -75,7 +75,7 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
                 targetTime: targetTime
             };
             try {
-                const response = await fetch('http://localhost:3000/addTask', {
+                const response = await fetch('/api/addTask', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
         const updatedTask = toDoList.find(task => task.id === id);
         const newStatus = !updatedTask.isFinished;
         try {
-            const response = await fetch('http://localhost:3000/updateTaskStatus', {
+            const response = await fetch('/api/updateTaskStatus', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ function TodoList({ username, userid, setIsLoggedIn, isLoggedIn }) {
     };
     const handleDelete = async (id) => {
         try {
-            const response = await fetch(`http://localhost:3000/deleteTask/${id}`, {
+            const response = await fetch(`/api/deleteTask/${id}`, {
                 method: 'DELETE',
             });
             if (response.ok) {

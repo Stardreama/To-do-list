@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './register_login.css';
 
-const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername,IsLoggedIn }) => {
+const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername, IsLoggedIn }) => {
     const [username, setLocalUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername,IsLoggedIn }) => 
             return;
         }
         const submitter = e.nativeEvent.submitter;
-        const url = submitter.name === 'register' ? 'http://localhost:3000/register' : 'http://localhost:3000/login';
+        const url = submitter.name === 'register' ? '/api/register' : '/api/login';
         const action = submitter.name === 'register' ? '注册' : '登陆';
         try {
             const response = await fetch(url, {
@@ -34,7 +34,7 @@ const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername,IsLoggedIn }) => 
                 const data = await response.json();
                 setIsLoggedIn(true);
                 message.success(submitter.name === 'register' ? '注册成功' : '登陆成功');
-                setUserid(data.userid);  
+                setUserid(data.userid);
                 setUsername(data.username);
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('username', data.username);
@@ -53,7 +53,7 @@ const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername,IsLoggedIn }) => 
 
     return (
         <div className="outer-background">
-            <form action="" className="login" onSubmit={handleSubmit}>
+            <form action="" className="login" onSubmit={handleSubmit} autoComplete="off">
                 <p>Login</p>
                 <input type="text" placeholder="用户名" name='username' value={username} onChange={(e) => {
                     setLocalUsername(e.target.value)
