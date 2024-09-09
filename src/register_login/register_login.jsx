@@ -1,9 +1,14 @@
 import { message } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './register_login.css';
 
 const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername, IsLoggedIn }) => {
+
+    useEffect(() => {
+        document.title = "Todo List";
+    }, []);
+
     const [username, setLocalUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
