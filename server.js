@@ -55,7 +55,7 @@ app.post('/register', async (req, res) => {
             return res.status(400).json({ message: '用户名被占用' });
         }
         const user = await addUser(username, passwordHash);
-        res.status(201).json({ userid: user.id, username: user.name, message: 'User registered!' });
+        res.status(201).json({ userid: user.id, username: user.username, message: 'User registered!' });
     } catch (err) {
         console.error("Error in addUser:", err);
         res.status(400).json('Error: ' + err);
