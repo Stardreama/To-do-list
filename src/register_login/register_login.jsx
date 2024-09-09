@@ -15,7 +15,7 @@ const RegisterLogin = ({ setIsLoggedIn, setUserid, setUsername, IsLoggedIn }) =>
     const handleSubmit = async (e) => {
         e.preventDefault();
         const usernameRegex = /^[\w-]{4,16}$/;
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*? ])[\S]{6,}$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*?-_%~ ])[\S]{6,}$/;
         if (!usernameRegex.test(username)) {
             message.error('用户名无效:请确保用户名为4到16位的字母、数字、下划线或减号');
             return;
